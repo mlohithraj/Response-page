@@ -26,6 +26,7 @@
                 <option>Fuel</option>
                 <option>Movie</option>
                 <option>Travel</option>
+                <option>Food</option>
             </select>
           </div>
           <input class="btn" type="submit" value="Submit">
@@ -56,7 +57,7 @@
         selection
      }
 
-     axios.post("https://crudcrud.com/api/6ee5631b6a7c49169b40dbeed77072d7/appointmentDate", obj)
+     axios.post("https://crudcrud.com/api/24d9aab9667f4d1b8c663f0a8663f468/appointmentDate", obj)
      .then((response) => {
       showTheUserOnScreen(response.data)
       // console.log(response)
@@ -69,6 +70,20 @@
     //  localStorage.setItem(obj.Descriptive, JSON.stringify(obj));
     //  showTheUserOnScreen(obj);
     }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      axios.get("https://crudcrud.com/api/24d9aab9667f4d1b8c663f0a8663f468/appointmentDate")
+      .then((response) => {
+        console.log(response)
+        for( var i=0; i<response.data.length; i++){
+          showTheUserOnScreen(response.data[i])
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+    })
+
     function showTheUserOnScreen(obj){
         const parentElement = document.getElementById('users');
         const childElement = document.createElement('li');
@@ -78,10 +93,21 @@
        deleteButton.type = 'button';
        deleteButton.value = 'Delete';
 
-       deleteButton.onclick = () =>{
-        localStorage.removeItem(obj.Descriptive);
-        parentElement.removeChild(childElement);
-       }
+      //  deleteButton.onclick = () =>{
+
+        deleteButton.onclick = () =>{
+          axios.delete(`https://crudcrud.com/api/24d9aab9667f4d1b8c663f0a8663f468/appointmentDate/${obj._id}`)
+          .then(() => {
+            parentElement.removeChild(childElement)
+          })
+          .catch((error) => {
+            console.log(error);
+          })
+        }
+
+        // localStorage.removeItem(obj.Descriptive);
+        // parentElement.removeChild(childElement);
+      //  }
 
        const editButtton = document.createElement('input');
        editButtton.type = 'button';

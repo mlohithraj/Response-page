@@ -114,8 +114,16 @@
        editButtton.value = 'Edit';
 
        editButtton.onclick = () =>{
-        localStorage.removeItem(obj.Descriptive);
-        parentElement.removeChild(childElement);
+        axios.put(`https://crudcrud.com/api/24d9aab9667f4d1b8c663f0a8663f468/appointmentDate/${obj._id}`)
+          .then(() => {
+            parentElement.removeChild(childElement)
+          })
+          .catch((error) => {
+            console.log(error);
+          })
+
+        // localStorage.removeItem(obj.Descriptive);
+        // parentElement.removeChild(childElement);
         document.getElementById('Expense').value = obj.AddExpenses;
         document.getElementById('Description').value = obj.Descriptive;
         document.getElementById('selective').value = obj.selection;
